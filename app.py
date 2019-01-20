@@ -1,39 +1,48 @@
-from flask import Flask, request, jsonify, render_template
-import os
-import dialogflow
+# Ref: https://github.com/bhavaniravi/rasa-site-bot
+from flask import Flask
+from flask import render_template,jsonify,request
 import requests
-import json
-import pusher
+# from models import *
+from engine import *
+import random
+
 
 app = Flask(__name__)
+app.secret_key = '12345'
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def hello_world():
+    return render_template('home.html')
+
+get_random_response = lambda intent:random.choice(intent_response_dict[intent])
+# get_fact_response = lambda intent:random.choice(fact_response_dict[intent])
+
+@app.route('/chat',methods=["POST"])
+def chat():
+    try:
+        user_message = request.form["text"]
+        response = requests.get("http://localhost:5000/parse",params={"q":user_message})
+        response = response.json()
+        entities = response.get("entities")
+        topresponse = response["intent"]
+        intent = topresponse.get("name")
+        print("Intent: {}, Entities: {}".format(intent,entities))
+        if intent == "fact":
+            response_text = get_fact_response()
+        elif intent == "gst-info":
+            response_text = gst_info(entities)# "Sorry will get answer soon" #get_event(entities["day"],entities["time"],entities["place"])
+        elif intent == "gst-query":
+            response_text = gst_query(entities)
+        else:
+            response_text = get_random_response(intent)
+        return jsonify({"status":"success","response":response_text})
+    except Exception as e:
+        print(e)
+        return jsonify({"status":"success","response":"Sorry I am not trained to do that yet..."})
 
 
-def detect_intent_texts(project_id, session_id, text, language_code):
-    session_client = dialogflow.SessionsClient()
-    session = session_client.session_path(project_id, session_id)
-
-    if text:
-        text_input = dialogflow.types.TextInput(
-            text=text, language_code=language_code)
-        query_input = dialogflow.types.QueryInput(text=text_input)
-        response = session_client.detect_intent(
-            session=session, query_input=query_input)
-
-        return response.query_result.fulfillment_text
-
-@app.route('/send_message', methods=['POST'])
-def send_message():
-    message = request.form['message']
-    project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
-    fulfillment_text = detect_intent_texts(project_id, "unique", message, 'en')
-    response_text = { "message":  fulfillment_text }
-
-    return jsonify(response_text)
-
-# run Flask app
+app.config["DEBUG"] = True
 if __name__ == "__main__":
-    app.run()
+    app.run(port=8080)
+
+#### ------ gstfaq -------
