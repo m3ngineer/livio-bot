@@ -19,6 +19,9 @@ get_random_response = lambda intent:random.choice(intent_response_dict[intent])
 
 @app.route('/chat',methods=["POST"])
 def chat():
+    # user_message = request.form["text"]
+    # r = requests.post("http://localhost:5005/conversations/default/parse",params={"query":user_message})
+    # print(r)
     try:
         user_message = request.form["text"]
         response = requests.get("http://localhost:5000/parse",params={"q":user_message})
@@ -29,10 +32,6 @@ def chat():
         print("Intent: {}, Entities: {}".format(intent,entities))
         if intent == "fact":
             response_text = get_fact_response()
-        elif intent == "gst-info":
-            response_text = gst_info(entities)# "Sorry will get answer soon" #get_event(entities["day"],entities["time"],entities["place"])
-        elif intent == "gst-query":
-            response_text = gst_query(entities)
         else:
             response_text = get_random_response(intent)
         return jsonify({"status":"success","response":response_text})
