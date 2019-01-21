@@ -1,0 +1,7 @@
+action_endpoint:
+  url: "http://localhost:5055/webhook"
+
+# nlu:
+#     url: "http://localhost:5000/"
+#     # token: <token>  # [optional]
+#     # token_name: <name of the token> # [optional] (default: token)

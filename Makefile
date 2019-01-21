@@ -25,21 +25,16 @@ clean:
 	rm -rf docs/_build
 
 train-nlu:
-	python -m rasa_nlu.train -c nlu_config.yml --data data/nlu_data.md --path models/current/nlu --verbose
-	# python -m rasa_nlu.train -c nlu_config.yml --data data/nlu_data.md -o models --fixed_model_name nlu --project current --verbose
-	# python -m rasa_nlu.train -c nlu_config.yml -d data/nlu_data.md --path projects --verbose ## Code from gstfaq
+	python -m rasa_nlu.train -c nlu_config.yml --data data/nlu_data.md --path models --project livio --fixed_model_name nlu --verbose
 
 run-nlu-server:
-	python -m rasa_nlu.server --path models/current/nlu
-
-run-core-server:
-	python -m rasa_core.run -d models/current/dialogue -u models/current/nlu --enable_api --endpoints endpoints.yml
+	python -m rasa_nlu.server --path models/livio/nlu/
 
 train-core:
-	python -m rasa_core.train -d domain.yml -s data/stories.md -o models/current/dialogue -c policies.yml
-
-cmdline:
-	python -m rasa_core.run -d models/current/dialogue -u models/current/nlu --endpoints endpoints.yml
+	python -m rasa_core.train -d domain.yml -s data/stories.md -o models/livio/dialouge -c policies.yml
 
 action-server:
 	python -m rasa_core_sdk.endpoint --actions actions
+
+run-core-server:
+	python -m rasa_core.run -d models/livio/dialouge -u models/livio/nlu --endpoints endpoints.yml
