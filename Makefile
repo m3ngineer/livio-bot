@@ -28,7 +28,7 @@ train-nlu:
 	python -m rasa_nlu.train -c nlu_config.yml --data data/nlu_data.md --path models --project livio --fixed_model_name nlu --verbose
 
 run-nlu-server:
-	python -m rasa_nlu.server --path models/livio/nlu/
+	python -m rasa_nlu.server --path models/nlu
 
 train-core:
 	python -m rasa_core.train -d domain.yml -s data/stories.md -o models/livio/dialouge -c policies.yml
