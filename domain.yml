@@ -7,14 +7,20 @@ intents:
 - deny
 - joke
 - name
-
+- add_checkin
+- set_goal_00
+- set_goal_01
+- find_buddy
 
 entities:
 - name
+- goal
 
 
 slots:
   name:
+    type: text
+  goal:
     type: text
 
 
@@ -24,6 +30,12 @@ actions:
 - utter_greet
 - utter_goodbye
 - action_joke
+- utter_add_checkin
+- utter_set_goal_00
+- utter_set_goal_01
+- utter_set_goal_02
+- action_set_goal
+- utter_find_buddy
 
 
 templates:
@@ -38,3 +50,19 @@ templates:
 
   utter_thanks:
   - text: "My pleasure."
+
+  utter_add_checkin:
+  - text: "I can help you add your goal status for the day"
+
+  utter_set_goal_00:
+  - text: "I can help you set up a goal"
+
+  utter_set_goal_01:
+  - text: "What would you like to set your goal as?"
+
+  utter_set_goal_02:
+  - text: "Great, your goal to {goal} has been set up. I will check in with you daily for the next 3 days to see how you're doing. You can do it!"
+
+  utter_find_buddy:
+  - text: "I can help you find an accountability buddy"
+  - text: "Do you have someone in mind already?"

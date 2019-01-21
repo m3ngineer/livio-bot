@@ -29,4 +29,21 @@
 * thanks
  - utter_thanks
 * goodbye
- - utter_goodbye 
+ - utter_goodbye
+
+## story_set_goal
+* set_goal_00
+ - utter_set_goal_00
+ - utter_set_goal_01
+* set_goal_01{"goal":"Program for 15 min every day"}
+ - action_set_goal
+* thanks
+ - utter_thanks
+
+## story_find_buddy
+* find_buddy
+ - utter_find_buddy
+
+## story_add_checkin
+* add_checkin
+ - utter_add_checkin

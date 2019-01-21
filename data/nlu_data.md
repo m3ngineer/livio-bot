@@ -33,6 +33,11 @@
 - hello everybody
 - hello is anybody there
 - hello robot
+- What's up?
+- How you doing?
+- What up
+- sup
+- holla
 
 ## intent:thanks
 - Thanks
@@ -85,7 +90,53 @@
 - A joke please
 - Tell me a joke please
 - I would like to hear a joke
-- I would loke to hear a joke, please
+- I would like to hear a joke, please
 - Can you tell jokes?
 - Please tell me a joke
 - I need to hear a joke
+
+## intent: find_buddy
+- I'd like to find a health buddy
+- Can you find me a health buddy?
+- start program
+- start health buddy program
+- enroll in health buddy program
+- health buddy
+- initiate health buddy program
+- Find me a health buddy
+- Find me an accountability partner
+
+## intent: set_goal_00
+- Set up a goal
+- Can you help me set up a goal?
+- Set goal
+- I'd like to set a goal
+- Set a goal
+- Add goal
+
+## intent: set_goal_01
+- My goal is to [Run](goal)
+- I'd like to [Walk](goal)
+- I'd like to [Program](goal) for 15 minutes every day
+- I'd like to [Call my husband](goal) once a day
+- I'd like to [Text my wife](goal) daily
+- I'd like to [Work out](goal) everyday
+- [Exercise](goal) everyday
+- [Save money](goal) daily
+- [Practice piano](goal) for 15 minutes every day
+
+## intent: add_checkin
+- I'd like to check in
+- check in
+- Add check-in
+- Add check in
+- Add checkin
+- Check-in
+- Goal check-in
+- Goal check in
+- Daily check-in
+- Daily check in
+- Check in for the day
+- Add status
+- Add goal status
+- Status

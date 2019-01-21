@@ -38,3 +38,13 @@ action-server:
 
 run-core-server:
 	python -m rasa_core.run -d models/livio/dialouge -u models/livio/nlu --endpoints endpoints.yml
+
+retrain-reload-app:
+	python -m rasa_nlu.train -c nlu_config.yml --data data/nlu_data.md --path models --project livio --fixed_model_name nlu --verbose
+	python -m rasa_core.train -d domain.yml -s data/stories.md -o models/livio/dialouge -c policies.yml
+	python app.py
+
+retrain-reload-core-server:
+	python -m rasa_nlu.train -c nlu_config.yml --data data/nlu_data.md --path models --project livio --fixed_model_name nlu --verbose
+	python -m rasa_core.train -d domain.yml -s data/stories.md -o models/livio/dialouge -c policies.yml
+	python -m rasa_core.run -d models/livio/dialouge -u models/livio/nlu --endpoints endpoints.yml

@@ -9,6 +9,7 @@ import logging
 import requests
 import json
 from rasa_core_sdk import Action
+from rasa_core_sdk.events import SlotSet
 
 logger = logging.getLogger(__name__)
 
@@ -24,3 +25,20 @@ class ActionJoke(Action):
         joke = request['value']  # extract a joke from returned json response
         dispatcher.utter_message(joke)  # send the message back to the user
         return []
+
+class ActionSetGoal(Action):
+    def name(self):
+        return "action_set_goal"
+
+    def run(self, dispatcher, tracker, domain):
+        usr_msg = tracker.latest_message['text']
+        goal = tracker.get_slot('goal')
+        print("usr_msg: {} \n goal_slot: {}".format(usr_msg, goal))
+        if goal == None:
+            SlotSet('goal', usr_msg)
+            dispatcher.utter_template("utter_set_goal_02", tracker)
+            return [SlotSet('goal', goal)]
+        else:
+            SlotSet('goal', goal) # Need to keep this in here to make sure template utters most recent goal
+            dispatcher.utter_template("utter_set_goal_02", tracker)
+            return [SlotSet('goal', goal)]
