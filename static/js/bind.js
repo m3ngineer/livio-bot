@@ -49,9 +49,15 @@ function sayToBot(text){
             },
             function(jsondata, status){
                 if(jsondata["status"]=="success"){
-                    response=jsondata["response"];
+                    responses=jsondata["responses"];
+                    responses_obj = JSON.parse(responses)
 
-                    if(response){showBotMessage(response);}
+                    if(responses){
+                      for (i in responses_obj){
+                        showBotMessage(responses_obj[i]);
+                      }
+                      // showBotMessage(responses);
+                    }
                 }
             });
 
